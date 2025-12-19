@@ -42,6 +42,7 @@
 
 <body>
 <!-- Swiper -->
+<h1>Задание 2</h1>
 <div class="swiper mySwiper">
     <div class="swiper-wrapper">
         <div class="swiper-slide"><img src="img/download.jfif" alt=""></div>
@@ -51,6 +52,91 @@
 
     </div>
 </div>
+<h1>Задание 3</h1>
+Вид вклада:<br>
+<select id="type" onchange="changeType()">
+    <option value="">Выберите</option>
+    <option value="1">Пополняемый</option>
+    <option value="2">Срочный</option>
+</select>
+
+<br><br>
+
+Срок вклада:<br>
+<select id="term">
+    <option value="">Выберите</option>
+</select>
+
+<br><br>
+
+Сумма вклада:<br>
+<input type="text" id="sum">
+
+<br><br>
+
+<button onclick="calc()">Рассчитать</button>
+
+<br><br>
+
+<textarea id="result" rows="6" cols="60"></textarea>
+
+<script>
+    function changeType() {
+        var type = document.getElementById("type").value;
+        var term = document.getElementById("term");
+
+        term.innerHTML = "<option value=''>Выберите</option>";
+
+        if (type == "1") {
+            term.innerHTML += "<option value='6-20'>6 месяцев</option>";
+            term.innerHTML += "<option value='12-22'>1 год</option>";
+            term.innerHTML += "<option value='18-15'>1,5 года</option>";
+            term.innerHTML += "<option value='24-10'>2 года</option>";
+        }
+
+        if (type == "2") {
+            term.innerHTML += "<option value='3-20'>3 месяца</option>";
+            term.innerHTML += "<option value='6-22'>6 месяцев</option>";
+            term.innerHTML += "<option value='9-23'>9 месяцев</option>";
+            term.innerHTML += "<option value='12-24'>1 год</option>";
+            term.innerHTML += "<option value='18-18'>1,5 года</option>";
+            term.innerHTML += "<option value='24-15'>2 года</option>";
+        }
+    }
+
+    function calc() {
+        var type = document.getElementById("type").value;
+        var termValue = document.getElementById("term").value;
+        var sum = document.getElementById("sum").value;
+
+        if (type == "" || termValue == "" || sum == "") {
+            document.getElementById("result").value = "Заполните все поля";
+            return;
+        }
+
+        var arr = termValue.split("-");
+        var months = arr[0];
+        var percent = arr[1];
+
+        var years = months / 12;
+        var total = sum * (1 + percent / 100 * years);
+
+        var typeName = "";
+        if (type == "1") {
+            typeName = "Пополняемый";
+        } else {
+            typeName = "Срочный";
+        }
+
+        document.getElementById("result").value =
+            "Выбран вид вклада: " + typeName + "\n" +
+            "Срок вклада: " + months + " месяцев\n" +
+            "Сумма вклада: " + sum + "\n" +
+            "Сумма в конце срока: " + total;
+    }
+</script>
+
+
 
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
